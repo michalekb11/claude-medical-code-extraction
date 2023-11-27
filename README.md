@@ -23,8 +23,9 @@ picture
   
 2. The layout of some pages is misleading to Claude. For example, appendix pages do not conform to the most common page layout.
 <p align="center">
-  <img width="680" alt="Screenshot 2023-11-27 at 3 24 45 PM" src="https://github.com/michalekb11/claude-medical-code-extraction/assets/109704770/ead7c886-4937-4b91-b9ef-66f27ee71046">
+  <img width="929" alt="Screenshot 2023-11-27 at 3 48 36 PM" src="https://github.com/michalekb11/claude-medical-code-extraction/assets/109704770/997754f7-9b7d-4846-8b5b-7175e6547603">
 </p>
+
 
 ## Current Approach
 Due to these challenges, advanced prompt engineering is required to extract the codes into a structured format. 
