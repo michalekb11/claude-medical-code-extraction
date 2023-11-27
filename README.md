@@ -14,10 +14,16 @@ AHRQ is an organization whose goal it is to make healthcare safer, more affordab
 * https://qualityindicators.ahrq.gov/measures/PSI_TechSpec
 
 ## Problem
-Our goal is to extract the medical codes from these PDFs such that it is easy to undestand the rule's definition. To do this, we must understand the numerator and denominator of the rate that is described in the PDF. The PDFs define each using group codes. For example, the numerator consists of group code A1, and the denominator consists of group codes A1 and A2, where A1 and A2 represent large collections of individual medical billing codes.
+Our goal is to automate the extraction the medical codes from these PDFs such that it is easy to undestand the rule's definition. Doing so would save our company hundreds of hours of manual extraction. To do this, we must understand the numerator and denominator of the rate that is described in the PDF. The PDFs define each part of the fraction using group codes. For example, the numerator consists of group code A1, and the denominator consists of group codes A1 and A2, where A1 and A2 represent large collections of individual medical billing codes.
+
+Because the codes are not separated by a common regular expression, we cannot use regex to extract the codes. Instead, we will use a language model (Claude in this case) to perform the extraction for us. However, even this method encounters challenges:
+1. The text of the PDFs read in out of order. The group codes are read in after the individual medical codes. This makes it much harder for Claude to associate each individual code with the correct group code.
+
+picture
+  
+2. The layout of some pages is misleading to Claude. (appendix + gc)
 
 
-**Problem:** Need a way to extract codes reliably and consistently to save coworkers hundreds of hours of manual extraction. The problem is that the page layouts are inconsistent, and the PDF text reads into python out of order.
 
 **Current solution:** Two steps where claude iterates over previous output. First is find group cdoes, 2nd is extract codes. Each step uses the following prompt engineering paterns to effectively accomplish the subtasks:
 * Persona pattern
