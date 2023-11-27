@@ -1,11 +1,21 @@
 # Advanced Prompt Engineering for Medical Code Extraction
-
-## Overview
 Two-minute overview providing context, stating the problem the project is addressing, characterising the approach, and giving a brief account of how the problem was addressed.
 
-**Preverity:** what is the company, what are we trying to do (CGE)
 
-**AHRQ:** introduce the PDFs and what they contain (rates/measures)
+## Preverity Background & Goals
+Preverity is a medical malpractice risk analytics company. We have over 80 billion lines of medical billing transactions covering ~80% of US medical providers. Our goal is to accurately assess the risk or probability of an incoming malpractice claim for physicians. The company began by selling this information to malpractice insurance carriers so that they can more accurately price the insurance premiums for providers and health systems. However, going forward, we aim to move into the health system space as well.
+
+Health systems currently attack malpractice claims retroactively. They wait for an event to occur, then they try to settle the claim with the least possible amount of damage. Because of this, many self-insured health systems set aside billions of dollars to protect against malpractice events. Preverity wants to provide health systems with a proactive approach to reduce risk by allowing for visibility into their physicians' behavior.
+
+We are developing a solution for health systems that we call a Clinical Guidelines Engine (CGE). This is a conglomeration of many public rules that the describe the rates at which adverse events occurs per each physician. For example, a given doctor may be 20 times the national average for "Accidental puncturation or laceration during a procedure." Each rule or "measure" is defined by a set of medical billing codes (procedure, diagnosis, and drug codes). Our goal is to quickly assemble measures that track the practicing behavior of our customers' physicians so that the health systems can mitigate risk before malpractice events occur.
+
+## Agency for Healthcare Research and Quality (AHRQ)
+AHRQ is an organization whose goal it is to make healthcare safer, more affordable, more accessible, and more. One thing they do is release Patient Safety Indicator (PSI) PDFs that describe rules/measures and the list the necessary medical billing codes for the rule. See some examples at this webpage:
+* https://qualityindicators.ahrq.gov/measures/PSI_TechSpec
+
+## Problem
+Our goal is to extract the medical codes from these PDFs such that it is easy to undestand the rule's definition. To do this, we must understand the numerator and denominator of the rate that is described in the PDF. The PDFs define each using group codes. For example, the numerator consists of group code A1, and the denominator consists of group codes A1 and A2, where A1 and A2 represent large collections of individual medical billing codes.
+
 
 **Problem:** Need a way to extract codes reliably and consistently to save coworkers hundreds of hours of manual extraction. The problem is that the page layouts are inconsistent, and the PDF text reads into python out of order.
 
