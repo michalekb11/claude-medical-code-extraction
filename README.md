@@ -1,13 +1,14 @@
 # Advanced Prompt Engineering for Medical Code Extraction
-Two-minute overview providing context, stating the problem the project is addressing, characterising the approach, and giving a brief account of how the problem was addressed.
-
-
 ## Preverity Background & Goals
 Preverity is a medical malpractice risk analytics company. We have over 80 billion lines of medical billing transactions covering ~80% of US medical providers. Our goal is to accurately assess the risk or probability of an incoming malpractice claim for physicians. The company began by selling this information to malpractice insurance carriers so that they can more accurately price the insurance premiums for providers and health systems. However, going forward, we aim to move into the health system space as well.
 
-Health systems currently attack malpractice claims retroactively. They wait for an event to occur, then they try to settle the claim with the least possible amount of damage. Because of this, many self-insured health systems set aside billions of dollars to protect against malpractice events. Preverity wants to provide health systems with a proactive approach to reduce risk by allowing for visibility into their physicians' behavior.
+<p align="center">
+  <img width="848" alt="image" src="https://github.com/michalekb11/claude-medical-code-extraction/assets/109704770/310817bf-c2ae-4712-a94f-6bc1d98d736b">
+</p>
 
-We are developing a solution for health systems that we call a Clinical Guidelines Engine (CGE). This is a conglomeration of many public rules that the describe the rates at which adverse events occurs per each physician. For example, a given doctor may be 20 times the national average for "Accidental puncturation or laceration during a procedure." Each rule or "measure" is defined by a set of medical billing codes (procedure, diagnosis, and drug codes). Our goal is to quickly assemble measures that track the practicing behavior of our customers' physicians so that the health systems can mitigate risk before malpractice events occur.
+Health systems currently approach malpractice claims retroactively. They wait for an event to occur, then they try to settle the claim with the least possible amount of damage. Because of this, many self-insured health systems set aside billions of dollars to protect against malpractice events. Preverity wants to provide health systems with a proactive approach to reduce risk by allowing for visibility into their physicians' practicing behavior.
+
+We are developing a solution for health systems that we call a Clinical Guidelines Engine (CGE). This is a conglomeration of many public rules that each define an adverse event that could happen in a medical setting. We can calculate the rate at which these events happen for each physician and compare them against the national benchmark. For example, a doctor may be 20 times the national average for "Accidental puncturation or laceration during a procedure." Each rule or "measure" is defined by a set of medical billing codes (procedure, diagnosis, and drug codes). Our goal is to quickly assemble measures that track the practicing behavior of our customers' physicians so that the health systems can mitigate risk before malpractice events occur.
 
 ## Agency for Healthcare Research and Quality (AHRQ)
 AHRQ is an organization whose goal it is to make healthcare safer, more affordable, more accessible, and more. One thing they do is release Patient Safety Indicator (PSI) PDFs that describe rules/measures and the list the necessary medical billing codes for the rule. See some examples at this webpage:
@@ -16,10 +17,12 @@ AHRQ is an organization whose goal it is to make healthcare safer, more affordab
 ## Problem
 Our goal is to automate the extraction the medical codes from these PDFs such that it is easy to undestand the rule's definition. Doing so would save our company hundreds of hours of manual extraction. To do this, we must understand the numerator and denominator of the rate that is described in the PDF. The PDFs define each part of the fraction using group codes. For example, the numerator consists of group code A1, and the denominator consists of group codes A1 and A2, where A1 and A2 represent large collections of individual medical billing codes.
 
-Because the codes are not separated by a common regular expression, we cannot use regex to extract the codes. Instead, we will use a language model (Claude in this case) to perform the extraction for us. However, even this method encounters challenges:
+Because the codes are not separated by a common regular expression, we cannot use regex to extract the codes. Instead, we will use a language model (here, it is Claude) to perform the extraction for us. However, even this method encounters challenges:
 1. The text of the PDFs read in out of order. The group codes are read in after the individual medical codes. This makes it much harder for Claude to associate each individual code with the correct group code.
 
-picture
+<p align="center">
+  <img width="900" alt="image" src="https://github.com/michalekb11/claude-medical-code-extraction/assets/109704770/3a9f878f-f568-4ddd-a912-993feabe2eb8">
+</p>
   
 2. The layout of some pages is misleading to Claude. For example, appendix pages do not conform to the most common page layout.
 <p align="center">
