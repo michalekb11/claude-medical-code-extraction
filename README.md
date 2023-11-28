@@ -33,33 +33,60 @@ Because the codes are not separated by a common regular expression, we cannot us
 ## Current Approach
 Due to these challenges, advanced prompt engineering is required to extract the codes into a structured format. 
 
-**Current solution:** Two steps where claude iterates over previous output. First is find group cdoes, 2nd is extract codes. Each step uses the following prompt engineering paterns to effectively accomplish the subtasks:
-* Persona pattern
-* Few shot prompting (with example augmentation)
-* Template pattern for output customization
+The current solution is to ask Claude to iterate over each page multiple times. This has resulted in better performance than asking Claude to accomplih the task in just one prompt.
+1. The first iteration asks Claude to identify the group codes on the page.
+2. The second iteration asks Claude to use the group codes it found to extract each individual medical code and assign them to the correct group code.
 
-This solution scores ___ on a manually created validation set (this is because it gets a whole page wrong).
+Each of these prompts requires advanced prompt engineering to be effective. This is due to the pages being messy, complex, and inconsistent in format/appearance. The following prompt engineering patterns were used in both steps:
+* **Persona pattern -** Ask the LLM to assume a particular role that would be beneficial for accomplishing the task. Think about who you would go to in the real world if you wanted advice on how to solve this problem.
 
-## Code Demonstration
-Jupyter notebook demonstration
+> "Human: You are an expert medical coder with knowledge of procedure (ICD-10-PCS, CPT, HCPCS), diagnosis (ICD-10-CM, ICD-11), drug (NDC), revenue codes, and more. More importantly, you are familiar with public PDFs from the Agency for Healthcare Research and Quality (AHRQ) that define Public Safety Indicators (PSI). Below, you will find examples of full pages from these PDF documents. These pages list medical codes which are typically represented by alphanumeric strings..."
 
-## Live Demo
-Streamlit
+* **Template pattern (output customization) -** Provide a specified output format that the LLM should adhere to. This allows the output to be parsed easier (and in this case, converted to a CSV).
+
+> "Your final answer should follow the output format below:  
+[group code]|[code1]|[code1 description]  
+[group code]|[code2]|[code2 description]  
+etc..."
+
+* **Few-shot prompting (with example augmentation) -** Show the LLM multiple examples of the input you will provide as well as the correct answer that should be returned. Here, the prompt includes 8-10 diverse examples of full pages from AHRQ PDFs as well as the correct output to assist in Claude's in-context learning. Additionally, some of the examples are the raw text, and some examples are cleaned text to help Claude learn what the important information is in each example.
+
+> "Example page: AHRQ QI ICD-10-CM/PCS Specification v2023  
+PSI 08 In-Hospital Fall-Associated Fracture Rate  
+qualityindicators.ahrq.gov  
+Joint prosthesis associated fracture diagnosis codes: (PROSFXID)  
+M96661 Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, right leg  
+M9701XA Periprosthetic fracture around internal prosthetic right hip joint, initial encounter  
+M96662 Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, left leg  
+M9702XA Periprosthetic fracture around internal prosthetic left hip joint, initial encounter  
+M96669 Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, unspecified leg  
+August 2023 3 of 109  
+> Example group codes: PROSFXID - Joint prosthesis associated fracture diagnosis codes  
+
+> Assistant: PROSFXID|M96661|Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, right leg  
+PROSFXID|M9701XA|Periprosthetic fracture around internal prosthetic right hip joint, initial encounter  
+PROSFXID|M96662|Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, left leg  
+PROSFXID|M9702XA|Periprosthetic fracture around internal prosthetic left hip joint, initial encounter  
+PROSFXID|M96669|Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, unspecified leg"
+
+## Effectiveness
+This solution has an accuracy of 73.2% on a manually created validation set. However, note that the model will get large chunks of codes wrong at a time. For example, if Claude gets 1 code incorrect on a page, it often gets all of them wrong on the page. 
+
+Claude seems to be fairly reliable when it comes to rewriting the text exactly as it appears on the original page. The aspect of the extraction that the model struggles most with is the assignment of each individual code to the correct group code, likely because of the text ordering issues when the PDF is read in.
 
 ## Critical Analysis
 Answer one or more of the following questions: What is the impact of this project? What does it reveal or suggest? What is the next step?
 
-**Impact:** Will be able to generate measures much faster for CGE, allowing the company to expand more rapidly into the health system space.
+**Impact:** The current solution is not perfect, but it performs well enough to be able to save the company many hours of manual code extraction. This will assist in generating measures for CGE much faster, allowing Preverity to expand more rapidly into the health system space.
 
-**Persisting issues:** Does not work correctly on all pages. A human would have to review the output. If only text order problem was solved... we would be able to achieve a much higher accuracy...
+**Persisting issues:** The model still makes mistakes on some pages. Most often, this is due to text being read in out of order. If we were able to solve this issue, we would be able to achieve a much higher accuracy and consistency.
 
-**Next steps:** Can we fix issue of text order as it is read into python? Tried using Adobe tool that converts PDFs to text files, HTML, word documents, and more. This (for the most part) fixes the text order problem. Here are the potential solutions going forward:
-* Now, we can modify our prompt to act on pages we know will have correct text order, and check accuracy.
-* If the Adobe tool creates HTML files the same each time, there is a possibility to webscrape the codes instead of using Claude. This would save time (webscraping much faster than calling Claude), money (costs money to call Claude), and has the potential to be more accuract (no hallucinations in webscraping).
+**Next steps:**
+* Investigate whether we can fix the text order issue using the Adobe tool that converts PDFs to other file formats such as text files.
+* If converting to a text file appears promising, adjust the prompts slightly to accomodate inputs that look slightly different. Then, reevaluate the results.
+* If Adobe can convert PDFs to HTML files in a consistent manner across PDFs, try webscraping the codes using the HTML. This would eliminate the need for a LLM (reducing costs, saving time, and potentially providing more reliable results).
 
 ## Resources
-Prepare links of where to go to get more information (other papers, models, blog posts (e.g. papers with code)). Use at least 5?
-
 Preverity website
 * https://preverity.com/
 
