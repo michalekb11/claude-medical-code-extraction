@@ -87,7 +87,14 @@ Claude seems to be fairly reliable when it comes to rewriting the text exactly a
 Preverity website
 * https://preverity.com/
 
+What is medical malpractice?
+* https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2628513/
+
+Who gets sued the most (consider physician age, specialty, etc.)?
+* https://www.ama-assn.org/press-center/press-releases/ama-one-three-physicians-previously-sued-their-career#:~:text=In%20general%2C%20surgical%20specialties%20are,being%20sued%20during%20their%20careers.
+
+What are medical billing codes?
+* https://www.devry.edu/blog/medical-billing-codes-behind-your-healthcare-bills.html
+
 AHRQ Patient Safety Indicators
 * https://qualityindicators.ahrq.gov/measures/PSI_TechSpec
-
-
