@@ -57,3 +57,10 @@ Answer one or more of the following questions: What is the impact of this projec
 ## Resources
 Prepare links of where to go to get more information (other papers, models, blog posts (e.g. papers with code)). Use at least 5?
 
+Preverity website
+* https://preverity.com/
+
+AHRQ Patient Safety Indicators
+* https://qualityindicators.ahrq.gov/measures/PSI_TechSpec
+
+
