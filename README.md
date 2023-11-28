@@ -74,8 +74,6 @@ This solution has an accuracy of 73.2% on a manually created validation set. How
 Claude seems to be fairly reliable when it comes to rewriting the text exactly as it appears on the original page. The aspect of the extraction that the model struggles most with is the assignment of each individual code to the correct group code, likely because of the text ordering issues when the PDF is read in.
 
 ## Critical Analysis
-Answer one or more of the following questions: What is the impact of this project? What does it reveal or suggest? What is the next step?
-
 **Impact:** The current solution is not perfect, but it performs well enough to be able to save the company many hours of manual code extraction. This will assist in generating measures for CGE much faster, allowing Preverity to expand more rapidly into the health system space.
 
 **Persisting issues:** The model still makes mistakes on some pages. Most often, this is due to text being read in out of order. If we were able to solve this issue, we would be able to achieve a much higher accuracy and consistency.
