@@ -1,0 +1,164 @@
+Human: You are an expert medical coder with knowledge of procedure (ICD-10-PCS, CPT, HCPCS), diagnosis (ICD-10-CM, ICD-11), drug (NDC), revenue codes, and more. More importantly, you are familiar with public PDFs from the Agency for Healthcare Research and Quality (AHRQ) that define Public Safety Indicators (PSI). Below, you will find examples of full pages from these PDF documents. These pages list medical codes which are typically represented by alphanumeric strings and are followed by the codes' descriptions. Sometimes, you will find a group code at the top or bottom of the page that some or all of the individual codes belong to. The group codes are often enclosed in parenthesis. Sometimes, there are multiple group codes on a single page. Your instructions are below.
+
+The raw text on these pages are very messy. Your goal is to identify all of the group codes on the page as well as their descriptions and report them back to me.
+
+Your output should be in the following format with the bracket characters "[]" acting as placeholders:
+[group code #1] - [description of group code #1]
+[group code #2] - [description of group code #2]
+(...if there are more, continue for the rest of the group codes.)
+
+In addition, you should keep in mind the following notes while searching for the group codes:
+1. The page likely has a header and a footer that you may disreguard. For example, you may ignore text such as URL's and date information.
+2. Group codes are alphanumeric strings that define a class of medcial codes in which each individual medical code is related to or falls under the description of the group code. In these PDF's, group codes are often enclosed in parenthesis. They are often located at the top or bottom of a page in the following format with []'s as placeholders: [GROUP CODE DESCRIPTION]: ([GROUP CODE]).
+3. When you find a group code, rewrite the group code and the description EXACTLY as it appears on the page. You may reformat the words to match the expected output format above, but the code and the description should be identical to the original page.
+4. Not all pages have group codes. There are some pages that list many individual group codes but do not specify a group code on the page. In these situations, simply write "There is no group code on this page." Do not make up a group code if you do not find one.
+5. Do not hallucinate. Only use the information contained on the page.
+
+You will now see some examples of the text of the page as well as the cleaned and formatted group codes that you should return to me. Some of the pages are the raw text, and some have been cleaned up to make it easier for you to understand what is important.
+
+Example 1 page: AHRQ QI ICD-10-CM/PCS Specification v2023\nPSI 03 Pressure Ulcer Rate\nqualityindicators.ahrq.gov\nL8943 Pressure ulcer of contiguous site of back, \nbuttock and hip, stage 3L8945 Pressure ulcer of contiguous site of back, \nbuttock and hip, unstageable\nL8944 Pressure ulcer of contiguous site of back, \nbuttock and hip, stage 4\nL89810 Pressure ulcer of head, unstageable L89814 Pressure ulcer of head, stage 4\nL89813 Pressure ulcer of head, stage 3\nL89520 Pressure ulcer of left ankle, unstageable L89524 Pressure ulcer of left ankle, stage 4\nL89523 Pressure ulcer of left ankle, stage 3\nL89320 Pressure ulcer of left buttock, unstageable L89324 Pressure ulcer of left buttock, stage 4\nL89323 Pressure ulcer of left buttock, stage 3\nL89020 Pressure ulcer of left elbow, unstageable L89024 Pressure ulcer of left elbow, stage 4\nL89023 Pressure ulcer of left elbow, stage 3\nL89220 Pressure ulcer of left hip, unstageable L89224 Pressure ulcer of left hip, stage 4\nL89223 Pressure ulcer of left hip, stage 3\nL89140 Pressure ulcer of left lower back, unstageable L89144 Pressure ulcer of left lower back, stage 4\nL89143 Pressure ulcer of left lower back, stage 3\nL89120 Pressure ulcer of left upper back, unstageable L89124 Pressure ulcer of left upper back, stage 4\nL89123 Pressure ulcer of left upper back, stage 3\nL89500 Pressure ulcer of unspecified ankle, \nunstageableL89504 Pressure ulcer of unspecified ankle, stage 4\nL89503 Pressure ulcer of unspecified ankle, stage 3Pressure Ulcer of Left Hip, Inclusion Diagnosis Codes: (PILHIPD)PI~D: Anatomic site-specific pressure ulcer stage 3 or 4 (or unstageable) diagnosis code lists:\nPressure Ulcer of Contiguous Site of Back, Buttock and Hip, Inclusion Diagnosis Codes: (PICONTIGBBHD)\nPressure Ulcer of Head, Inclusion Diagnosis Codes: (PIHEADD)\nPressure Ulcer of Left Ankle, Inclusion Diagnosis Codes: (PILANKLED)\nPressure Ulcer of Left Buttock, Inclusion Diagnosis Codes: (PILBUTTD)\nPressure Ulcer of Left Elbow, Inclusion Diagnosis Codes: (PILELBOWD)\nPressure Ulcer of Left Lower Back, Inclusion Diagnosis Codes: (PILLOBACKD)\nPressure Ulcer of Left Upper Back, Inclusion Diagnosis Codes: (PILUPBACKD)\nPressure Ulcer of Unspecified Ankle, Inclusion Diagnosis Codes: (PINANKLED)\n9 of 16 August 2023
+
+Assistant: PICONTIGBBHD - Pressure Ulcer of Contiguous Site of Back, Buttock and Hip, Inclusion Diagnosis Codes
+PIHEADD - Pressure Ulcer of Head, Inclusion Diagnosis Codes
+PILANKLED - Pressure Ulcer of Left Ankle, Inclusion Diagnosis Codes
+PILBUTTD - Pressure Ulcer of Left Buttock, Inclusion Diagnosis Codes
+PILELBOWD - Pressure Ulcer of Left Elbow, Inclusion Diagnosis Codes
+PILHIPD - Pressure Ulcer of Left Hip, Inclusion Diagnosis Codes
+PILLOBACKD - Pressure Ulcer of Left Lower Back, Inclusion Diagnosis Codes
+PILUPBACKD - Pressure Ulcer of Left Upper Back, Inclusion Diagnosis Codes
+PINANKLED - Pressure Ulcer of Unspecified Ankle, Inclusion Diagnosis Codes
+
+Example 2 page: AHRQ QI ICD-10-CM/PCS Specification v2023\nPSI 03 Pressure Ulcer Rate\nqualityindicators.ahrq.gov\nL89604 Pressure ulcer of unspecified heel, stage 4 L89614 Pressure ulcer of right heel, stage 4\nL89606 Pressure-Induced deep tissue damage of unspecified \nheelL89616 Pressure-Induced deep tissue damage of right heel\nL89200 Pressure ulcer of unspecified hip, unstageable L89210 Pressure ulcer of right hip, unstageable\nL89203 Pressure ulcer of unspecified hip, stage 3 L89213 Pressure ulcer of right hip, stage 3\nL89204 Pressure ulcer of unspecified hip, stage 4 L89214 Pressure ulcer of right hip, stage 4\nL89206 Pressure-Induced deep tissue damage of unspecified \nhipL89216 Pressure-Induced deep tissue damage of right hip\nL89100 Pressure ulcer of unspecified part of back, \nunstageableL89130 Pressure ulcer of right lower back, unstageable\nL89103 Pressure ulcer of unspecified part of back, stage 3 L89133 Pressure ulcer of right lower back, stage 3\nL89104 Pressure ulcer of unspecified part of back, stage 4 L89134 Pressure ulcer of right lower back, stage 4\nL89106 Pressure-Induced deep tissue damage of unspecified \npart of backL89136 Pressure-Induced deep tissue damage of right lower \nback\nL89100 Pressure ulcer of unspecified part of back, \nunstageableL89110 Pressure ulcer of right upper back, unstageable\nL89103 Pressure ulcer of unspecified part of back, stage 3 L89113 Pressure ulcer of right upper back, stage 3\nL89104 Pressure ulcer of unspecified part of back, stage 4 L89114 Pressure ulcer of right upper back, stage 4\nL89106 Pressure-Induced deep tissue damage of unspecified \npart of backL89116 Pressure-Induced deep tissue damage of right upper \nback\nL89150 Pressure ulcer of sacral region, unstageable L89154 Pressure ulcer of sacral region, stage 4\nL89153 Pressure ulcer of sacral region, stage 3 L89156 Pressure-Induced deep tissue damage of sacral regionPressure Injury of Right Lower Back, Principal Diagnosis Exclusion Codes: (PIRLOBACEXD)\nPressure Injury of Right Upper Back, Principal Diagnosis Exclusion Codes: (PIRUPBACEXD)\nPressure Injury of Sacral Region, Principal Diagnosis Exclusion Codes: (PISACRAEXD)Pressure Injury of Right Hip, Principal Diagnosis Exclusion Codes: (PIRHIPEXD)\n14 of 16 August 2023
+
+Assistant: PIRHIPEXD - Pressure Injury of Right Hip, Principal Diagnosis Exclusion Codes
+PIRLOBACEXD - Pressure Injury of Right Lower Back, Principal Diagnosis Exclusion Codes
+PIRUPBACEXD - Pressure Injury of Right Upper Back, Principal Diagnosis Exclusion Codes
+PISACRAEXD - Pressure Injury of Sacral Region, Principal Diagnosis Exclusion Codes
+
+Example 3 page: AHRQ QI™ ICD-10-CM/PCS Specification v2020
+PSI 15 Unrecognized Abdominopelvic Accidental Puncture or Laceration Rate
+www.qualityindicators.ahrq.gov
+019C4ZX Drainage of pudendal nerve, percutaneous endoscopic approach, diagnostic
+0DBV4ZX Excision of mesentery, percutaneous endoscopic approach, diagnostic
+019C4ZZ Drainage of pudendal nerve, percutaneous endoscopic approach
+0DBV4ZZ Excision of mesentery, percutaneous endoscopic approach
+019M00Z Drainage of abdominal sympathetic nerve with drainage device, open approach
+0DBW0ZX Excision of peritoneum, open approach, diagnostic
+019M0ZX Drainage of abdominal sympathetic nerve, open approach, diagnostic
+0DBW0ZZ Excision of peritoneum, open approach
+019M0ZZ Drainage of abdominal sympathetic nerve, open approach
+0DBW3ZX Excision of peritoneum, percutaneous approach, diagnostic
+019M30Z Drainage of abdominal sympathetic nerve with drainage device, percutaneous approach
+0DBW3ZZ Excision of peritoneum, percutaneous approach
+019M3ZX Drainage of abdominal sympathetic nerve, percutaneous approach, diagnostic
+0DBW4ZX Excision of peritoneum, percutaneous endoscopic approach, diagnostic
+019M3ZZ Drainage of abdominal sympathetic nerve, percutaneous approach
+0DBW4ZZ Excision of peritoneum, percutaneous endoscopic approach
+019M40Z Drainage of abdominal sympathetic nerve with drainage device, percutaneous endoscopic approach
+0DC40ZZ Extirpation of matter from esophagogastric junction, open approach
+019M4ZX Drainage of abdominal sympathetic nerve, percutaneous endoscopic approach, diagnostic
+0DC43ZZ Extirpation of matter from esophagogastric junction, percutaneous approach
+019M4ZZ Drainage of abdominal sympathetic nerve, percutaneous endoscopic approach
+0DC44ZZ Extirpation of matter from esophagogastric junction, percutaneous endoscopic approach
+019N00Z Drainage of lumbar sympathetic nerve with drainage device, open approach
+0DC47ZZ Extirpation of matter from esophagogastric junction, via natural or artificial opening
+019N0ZX Drainage of lumbar sympathetic nerve, open approach, diagnostic
+0DC48ZZ Extirpation of matter from esophagogastric junction, via natural or artificial opening endoscopic
+019N0ZZ Drainage of lumbar sympathetic nerve, open approach
+0DC60ZZ Extirpation of matter from stomach, open approach
+019N30Z Drainage of lumbar sympathetic nerve with drainage device, percutaneous approach
+0DC63ZZ Extirpation of matter from stomach, percutaneous approach
+019N3ZX Drainage of lumbar sympathetic nerve, percutaneous approach, diagnostic
+0DC64ZZ Extirpation of matter from stomach, percutaneous endoscopic approach
+019N3ZZ Drainage of lumbar sympathetic nerve, percutaneous approach
+0DC67ZZ Extirpation of matter from stomach, via natural or artificial opening
+March 2021 9 of 537
+
+Assistant: There is no group code on this page.
+
+Example 4 page: AHRQ QI ICD-10-CM/PCS Specification v2023
+PSI 08 In-Hospital Fall-Associated Fracture Rate
+qualityindicators.ahrq.gov
+Joint prosthesis associated fracture diagnosis codes: (PROSFXID)
+M96661 Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, right leg
+M9701XA Periprosthetic fracture around internal prosthetic right hip joint, initial encounter
+M96662 Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, left leg
+M9702XA Periprosthetic fracture around internal prosthetic left hip joint, initial encounter
+M96669 Fracture of femur following insertion of orthopedic implant, joint prosthesis, or bone plate, unspecified leg
+August 2023 3 of 109
+
+Assistant: PROSFXID - Joint prosthesis associated fracture diagnosis codes
+
+Example 5 page: AHRQ QI™ ICD-10-CM/PCS Specification v2020
+PSI 15 Unrecognized Abdominopelvic Accidental Puncture or Laceration Rate
+www.qualityindicators.ahrq.gov
+Accidental puncture or laceration during a procedure diagnosis codes: (TECHNI15D)
+D7811 Accidental puncture and laceration of the 
+spleen during a procedure on the spleenJ9572 Accidental puncture and laceration of a 
+respiratory system organ or structure 
+during other procedure
+D7812 Accidental puncture and laceration of the 
+spleen during other procedureK9171 Accidental puncture and laceration of a 
+digestive system organ or structure during 
+a digestive system procedure
+E3611 Accidental puncture and laceration of an 
+endocrine system organ or structure during 
+an endocrine system procedureK9172 Accidental puncture and laceration of a 
+digestive system organ or structure during 
+other procedure
+E3612 Accidental puncture and laceration of an 
+endocrine system organ or structure during 
+other procedureM96820 Accidental puncture and laceration of a 
+musculoskeletal structure during a 
+musculoskeletal system procedure
+I9751 Accidental puncture and laceration of a 
+circulatory system organ or structure 
+during a circulatory system procedureM96821 Accidental puncture and laceration of a 
+musculoskeletal structure during other 
+procedure
+I9752 Accidental puncture and laceration of a 
+circulatory system organ or structure 
+during other procedureN9971 Accidental puncture and laceration of a 
+genitourinary system organ or structure 
+during a genitourinary system procedure
+J9571 Accidental puncture and laceration of a 
+respiratory system organ or structure 
+during a respiratory system procedureN9972 Accidental puncture and laceration of a 
+genitourinary system organ or structure 
+during other procedure
+March 2021 3 of 537
+
+Assistant: TECHNI15D - Accidental puncture or laceration during a procedure diagnosis codes
+
+Example 6 page: AHRQ QI ICD-10-CM/PCS Specification v2023\nPSI 08 In-Hospital Fall-Associated Fracture Rate\nqualityindicators.ahrq.gov\nM80051A Age-Related osteoporosis with current \npathological fracture, right femur, initial \nencounter for fractureS72101C Unspecified trochanteric fracture of right \nfemur, initial encounter for open fracture \ntype IIIA, IIIB, or IIIC\nM80052A Age-Related osteoporosis with current \npathological fracture, left femur, initial \nencounter for fractureS72102A Unspecified trochanteric fracture of left \nfemur, initial encounter for closed \nfracture\nM80059A Age-Related osteoporosis with current \npathological fracture, unspecified femur, \ninitial encounter for fractureS72102B Unspecified trochanteric fracture of left \nfemur, initial encounter for open fracture \ntype I or II\nM80851A Other osteoporosis with current \npathological fracture, right femur, initial \nencounter for fractureS72102C Unspecified trochanteric fracture of left \nfemur, initial encounter for open fracture \ntype IIIA, IIIB, or IIIC\nM80852A Other osteoporosis with current \npathological fracture, left femur, initial \nencounter for fractureS72109A Unspecified trochanteric fracture of \nunspecified femur, initial encounter for \nclosed fracture\nM80859A Other osteoporosis with current \npathological fracture, unspecified femur, \ninitial encounter for fractureS72109B Unspecified trochanteric fracture of \nunspecified femur, initial encounter for \nopen fracture type I or II\nS72001A Fracture of unspecified part of neck of \nright femur, initial encounter for closed \nfractureS72109C Unspecified trochanteric fracture of \nunspecified femur, initial encounter for \nopen fracture type IIIA, IIIB, or IIIC\nS72001B Fracture of unspecified part of neck of \nright femur, initial encounter for open \nfracture type I or IIS72111A Displaced fracture of greater trochanter of \nright femur, initial encounter for closed \nfracture\nS72001C Fracture of unspecified part of neck of \nright femur, initial encounter for open \nfracture type IIIA, IIIB, or IIICS72111B Displaced fracture of greater trochanter of \nright femur, initial encounter for open \nfracture type I or II\nS72002A Fracture of unspecified part of neck of \nleft femur, initial encounter for closed \nfractureS72111C Displaced fracture of greater trochanter of \nright femur, initial encounter for open \nfracture type IIIA, IIIB, or IIIC\nS72002B Fracture of unspecified part of neck of \nleft femur, initial encounter for open \nfracture type I or IIS72112A Displaced fracture of greater trochanter of \nleft femur, initial encounter for closed \nfracture\nS72002C Fracture of unspecified part of neck of \nleft femur, initial encounter for open \nfracture type IIIA, IIIB, or IIICS72112B Displaced fracture of greater trochanter of \nleft femur, initial encounter for open \nfracture type I or II\nS72009A Fracture of unspecified part of neck of \nunspecified femur, initial encounter for \nclosed fractureS72112C Displaced fracture of greater trochanter of \nleft femur, initial encounter for open \nfracture type IIIA, IIIB, or IIIC\nS72009B Fracture of unspecified part of neck of \nunspecified femur, initial encounter for \nopen fracture type I or IIS72113A Displaced fracture of greater trochanter of \nunspecified femur, initial encounter for \nclosed fractureHip fracture diagnosis codes for PSI 08: (HIPFXID)\nAugust 2023 4 of 109
+
+Assistant: HIPFXID - Hip fracture diagnosis codes for PSI 08
+
+Example 7 page: AHRQ QI ICD-10-CM/PCS Specification v2023\nPSI 04 Death Rate among Surgical Inpatients with Serious Treatable Complications\nqualityindicators.ahrq.gov\nI462 Cardiac arrest due to underlying cardiac \nconditionR578 Other shock\nI468 Cardiac arrest due to other underlying \nconditionR579 Shock, unspecified\nI469 Cardiac arrest, cause unspecified T782XXA Anaphylactic shock, unspecified, initial \nencounter\nO0331 Shock following incomplete spontaneous \nabortionT8051XA Anaphylactic reaction due to \nadministration of blood and blood \nproducts, initial encounter\nO0381 Shock following complete or unspecified \nspontaneous abortionT8052XA Anaphylactic reaction due to vaccination, \ninitial encounter\nO0481 Shock following (induced) termination of \npregnancyT8059XA Anaphylactic reaction due to other serum, \ninitial encounter\nO0731 Shock following failed attempted \ntermination of pregnancyT8110XA Postprocedural shock unspecified, initial \nencounter\nO083 Shock following ectopic and molar \npregnancyT8111XA Postprocedural cardiogenic shock, initial \nencounter\nO751 Shock during or following labor and \ndeliveryT8119XA Other postprocedural shock, initial \nencounter\nR092 Respiratory arrest T882XXA Shock due to anesthesia, initial encounter\nR570 Cardiogenic shock T886XXA Anaphylactic reaction due to adverse \neffect of correct drug or medicament \nproperly administered, initial encounter\nR571 Hypovolemic shockShock or cardiac arrest diagnosis codes: (FTR5DX)\n8 of 34 August 2023
+
+Assistant: FTR5DX - Shock or cardiac arrest diagnosis codes
+
+Example 8 page: AHRQ QI ICD-10-CM/PCS Specification v2023\nPSI 11 Postoperative Respiratory Failure Rate\nqualityindicators.ahrq.gov\nF03C11 Unspecified dementia, severe, with \nagitationG3185 Corticobasal degeneration\nF03C18 Unspecified dementia, severe, with other \nbehavioral disturbanceG9382 Brain death\nF03C2 Unspecified dementia, severe, with \npsychotic disturbance\nAugust 2023 16 of 65
+
+Assistant: There is no group code on this page.
+
+Example 9 page: Appendix N
+AHRQ QI ICD-10-CM/PCS Specification v2023
+Patient Safety Indicators Appendices
+qualityindicators.ahrq.gov
+APPENDIX N:  COVID-19 Diagnosis Codes
+COVID diagnosis codes for use from Q2 2020 on: (COVIDD)
+J1282 Pneumonia due to coronavirus disease 2019
+U071 Covid-19
+COVID diagnosis code for use during Q1 2020: (COVIDQ120D)
+B9729 Other coronavirus as the cause of diseases classified elsewhere
+1 of 1 August 2023
+
+Assistant: COVIDD - COVID diagnosis codes for use from Q2 2020 on
+COVIDQ120D - COVID diagnosis code for use during Q1 2020
+
+Now it is your turn. You will see a new page below. You should output the group codes in the specified format you have seen above. If there are no group codes on the page, you should simply write "There is no group code on this page."
+
+Example 10 page: {document}
+
+Assistant:
