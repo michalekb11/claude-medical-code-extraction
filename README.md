@@ -11,7 +11,7 @@ Health systems currently approach malpractice claims retroactively. They wait fo
 We are developing a solution for health systems that we call a Clinical Guidelines Engine (CGE). This is a conglomeration of many public rules that each define an adverse event that could happen in a medical setting. We can calculate the rate at which these events happen for each physician and compare them against the national benchmark. For example, a doctor may be 20 times the national average for "Accidental puncturation or laceration during a procedure." Each rule or "measure" is defined by a set of medical billing codes (procedure, diagnosis, and drug codes). Our goal is to quickly assemble measures that track the practicing behavior of our customers' physicians so that the health systems can mitigate risk before malpractice events occur.
 
 ## Agency for Healthcare Research and Quality (AHRQ)
-AHRQ is an organization whose goal it is to make healthcare safer, more affordable, more accessible, and more. One thing they do is release Patient Safety Indicator (PSI) PDFs that describe rules/measures and the list the necessary medical billing codes for the rule. See some examples at this webpage: https://qualityindicators.ahrq.gov/measures/PSI_TechSpec
+AHRQ is an organization whose goal it is to make healthcare safer, more affordable, more accessible, and more. One thing they do is release Patient Safety Indicator (PSI) PDFs that describe rules/measures and the list the necessary medical billing codes for the rule. See some examples at this webpage: https://qualityindicators.ahrq.gov/measures/PSI_TechSpec.
 
 ## Problem
 Our goal is to automate the extraction the medical codes from these PDFs such that it is easy to undestand the rule's definition. Doing so would save our company hundreds of hours of manual extraction. To do this, we must understand the numerator and denominator of the rate that is described in the PDF. The PDFs define each part of the fraction using group codes. For example, the numerator consists of group code A1, and the denominator consists of group codes A1 and A2, where A1 and A2 represent large collections of individual medical billing codes.
@@ -32,14 +32,14 @@ Because the codes are not separated by a common regular expression, we cannot us
 ## Current Approach
 Due to these challenges, advanced prompt engineering is required to extract the codes into a structured format. 
 
-The current solution is to ask Claude to iterate over each page multiple times. This has resulted in better performance than asking Claude to accomplih the task in just one prompt.
+The current solution is to ask Claude to iterate over each page multiple times. This has resulted in better performance than asking Claude to accomplish the task in just one prompt.
 1. The first iteration asks Claude to identify the group codes on the page.
 2. The second iteration asks Claude to use the group codes it found to extract each individual medical code and assign them to the correct group code.
 
 Each of these prompts requires advanced prompt engineering to be effective. This is due to the pages being messy, complex, and inconsistent in format/appearance. The following prompt engineering patterns were used in both steps:
 * **Persona pattern -** Ask the LLM to assume a particular role that would be beneficial for accomplishing the task. Think about who you would go to in the real world if you wanted advice on how to solve this problem.
 
-> "Human: You are an expert medical coder with knowledge of procedure (ICD-10-PCS, CPT, HCPCS), diagnosis (ICD-10-CM, ICD-11), drug (NDC), revenue codes, and more. More importantly, you are familiar with public PDFs from the Agency for Healthcare Research and Quality (AHRQ) that define Public Safety Indicators (PSI). Below, you will find examples of full pages from these PDF documents. These pages list medical codes which are typically represented by alphanumeric strings..."
+> "Human: You are an expert medical coder with knowledge of procedure (ICD-10-PCS, CPT, HCPCS), diagnosis (ICD-10-CM, ICD-11), drug (NDC), revenue codes, and more. More importantly, you are familiar with public PDFs from the Agency for Healthcare Research and Quality (AHRQ) that define Patient Safety Indicators (PSI). Below, you will find examples of full pages from these PDF documents. These pages list medical codes which are typically represented by alphanumeric strings..."
 
 * **Template pattern (output customization) -** Provide a specified output format that the LLM should adhere to. This allows the output to be parsed easier (and in this case, converted to a CSV).
 
